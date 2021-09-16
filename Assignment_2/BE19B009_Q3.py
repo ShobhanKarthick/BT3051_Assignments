@@ -1,5 +1,4 @@
-# from matplotlib.pyplot import matshow, imsave
-import copy
+from matplotlib.pyplot import matshow, imsave
 
 class Simulate_Conways_Game_of_Life():
     def __init__(self, MyMatrix):
@@ -36,7 +35,7 @@ class Simulate_Conways_Game_of_Life():
         return matrix[i][j]  
 
     def simulate_one_step(self):
-        newMatrix = copy.deepcopy(self.matrix)
+        newMatrix = [[0 for i in range(100)] for j in range(100)]
 
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix[i])):
@@ -67,5 +66,5 @@ Step_39 = Game1.final_output()
 
 from matplotlib.pyplot import matshow
 
-# imsave("im" +".png", Step_39)
+imsave("im" +".png", Step_39)
 matshow(Step_39)
