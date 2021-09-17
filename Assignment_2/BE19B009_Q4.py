@@ -7,27 +7,29 @@ def InfixToPostfix(infix):
     while i in range(len(infix)+1):
         number = ""
         try:
-            while not infix[i] in operators:
+            while not infix[i] in operators:                # Filtering only numbers
                 if(i < len(infix)):
-                    number += infix[i]
+                    number += infix[i]                      # Forming the number by conactenating digits
                     i += 1
                 else:
                     break
 
             if(number != ""):
                 # print("A:", number)
-                postfixStack.append(int(number))
-                # else:
+                postfixStack.append(int(number))            # Push the number onto the postfix stack
 
-            if(infix[i]):
+            if(infix[i] in operators):
                 # print(infix[i])
-                if(len(postfixStack) == 0):
-                    postfixStack.append(infix[i])
+                if(len(postfixStack) == 0):                 
+                    postfixStack.append(infix[i])           # If postfix stack is empty, push operator directly
+
                 elif(len(operatorStack) == 0):
+                    operatorStack.append(infix[i])          # If operator stack is empty, push operator directly
+
+                elif(infix[i] == "(" or infix[i] == "^"):           # ^ and ( have the highest precedence hence push directly
                     operatorStack.append(infix[i])
-                elif(infix[i] == "(" or infix[i] == "^"):
-                    operatorStack.append(infix[i])
-                elif(infix[i] == "*" or infix[i] == "/"):
+
+                elif(infix[i] == "*" or infix[i] == "/"):           # Next in precedence is * and /, so push to the right place
                     if(len(operatorStack) != 0):
                         try:
                             while((operatorStack[-1] == "^" or operatorStack[-1] == "*" or operatorStack[-1] == "/")):
@@ -36,7 +38,7 @@ def InfixToPostfix(infix):
                         except:
                             operatorStack.append(infix[i])
 
-                elif(infix[i] == "-" or infix[i] == "+"):
+                elif(infix[i] == "-" or infix[i] == "+"):           # Lowest precedence is + and -, so push to the right place
                     if(len(operatorStack) != 0):
                         try:
                             while((operatorStack[-1] == "+" or operatorStack[-1] == "-" or operatorStack[-1] == "/" or operatorStack[-1] == "*" or operatorStack[-1] == "^")):
@@ -46,7 +48,7 @@ def InfixToPostfix(infix):
                             operatorStack.append(infix[i])
                         
 
-                elif(infix[i] == ")"):
+                elif(infix[i] == ")"):                              # On encountering ), pop from operator stack until (  and push to postfix stack
                     if(len(operatorStack) != 0):
                         try:
                             while(len(operatorStack) != 0 and operatorStack[-1] != "("):
@@ -68,6 +70,14 @@ def InfixToPostfix(infix):
     return postfixStack
 
 def EvaluatePostfix(postfix):
+
+    """ Postfix evaulation is done by have a evaluation stack
+    and pushing numbers to the stack until an operator is encountered
+    in the postfix expression. 
+    Once the operator is seen, pop the top 2 elements of the stack and 
+    perform the operation and push the answer back to the stack and 
+    repeat until postfix expression is empty
+    """
 
     evalStack = []
     for i in range(len(postfix)):
