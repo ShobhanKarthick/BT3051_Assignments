@@ -1,4 +1,4 @@
-from matplotlib.pyplot import matshow, imsave
+# from matplotlib.pyplot import matshow, imsave
 
 class Simulate_Conways_Game_of_Life():
     def __init__(self, MyMatrix):
@@ -22,8 +22,8 @@ class Simulate_Conways_Game_of_Life():
             self.value(i+1, j  , Matrix), 
             self.value(i+1, j+1, Matrix) 
             ])
-        count = neighborCells.count(1)
-        return count
+        Count = neighborCells.count(1)
+        return Count
     
     """ Add your functions here """
     def population(self, i, j, matrix):
@@ -66,5 +66,5 @@ Step_39 = Game1.final_output()
 
 from matplotlib.pyplot import matshow
 
-imsave("im" +".png", Step_39)
+# imsave("im" +".png", Step_39)
 matshow(Step_39)
